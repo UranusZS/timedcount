@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>zs</groupId>
+    <artifactId>mvn</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>zs</groupId>
+  <artifactId>timedcount</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>timedcount</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>6.8.5</version>
+      <scope>test</scope>
+    </dependency>
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-all</artifactId>
+		<version>1.10.19</version>
+	</dependency>
+
+    <dependency>
+      <groupId>org.easytesting</groupId>
+      <artifactId>fest-assert-core</artifactId>
+      <version>2.0M8</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jmock</groupId>
+      <artifactId>jmock</artifactId>
+      <version>2.6.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+     <groupId>org.twitter4j</groupId>
+     <artifactId>twitter4j-stream</artifactId>
+     <version>3.0.3</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.2.1</version>
+    </dependency>
+	<dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>
+		<version>19.0</version>
+	</dependency>
+  </dependencies>
+  
+  <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>${basedir}/resources</directory>
+      </resource>
+    </resources>
+
+    <pluginManagement>
+    <plugins>
+	    <plugin>  
+	        <artifactId>maven-assembly-plugin</artifactId>  
+	        <executions>                       <!--执行器 mvn assembly:assembly-->  
+	            <execution>  
+	                <id>make-assembly</id>     <!--名字任意 -->    
+	            <phase>package</phase>         <!-- 绑定到package生命周期阶段上 -->    
+	            <goals>    
+	               <goal>single</goal>         <!-- 只运行一次 -->    
+	            </goals>    
+	                <configuration>  
+	                         <descriptors>     <!--描述文件路径-->  
+	                              <descriptor>assembly.xml</descriptor>  
+	                        </descriptors>  
+	                </configuration>  
+	            </execution>  
+	        </executions>  
+	     </plugin> 
+     </plugins>
+     </pluginManagement>
+  </build>
+  
+   
+</project>

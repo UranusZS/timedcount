@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>zs</groupId>
+  <artifactId>mvn</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>mvn</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+ 
+  <dependencies>
+  
+	<dependency>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-shade-plugin</artifactId>
+		<version>2.4.2</version>
+	</dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+	<dependency>
+	    <groupId>log4j</groupId>
+	    <artifactId>log4j</artifactId>
+	    <version>1.2.17</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.apache.storm</groupId>
+		<artifactId>storm-core</artifactId>
+		<version>0.9.6</version>
+		<scope>provided</scope>  <!-- 使得打依赖包的时候，不把storm打进依赖包里面 -->    
+	</dependency>
+	
+	<dependency>
+		<groupId>org.yaml</groupId>
+		<artifactId>snakeyaml</artifactId>
+		<version>1.16</version>
+	</dependency>
+
+  </dependencies>
+
+	<build>
+	<pluginManagement>
+		<plugins>
+		  <!--
+		    Bind the maven-assembly-plugin to the package phase
+		    this will create a jar file without the storm dependencies
+		    suitable for deployment to a cluster.
+		   -->
+		  <plugin>
+		    <artifactId>maven-assembly-plugin</artifactId>
+		    <configuration>
+		      <descriptorRefs>
+		        <descriptorRef>jar-with-dependencies</descriptorRef>
+		      </descriptorRefs>
+		      <archive>
+		        <manifest>
+		          <mainClass/>
+		        </manifest>
+		      </archive>
+		    </configuration>
+		    <executions>
+		      <execution>
+		        <id>make-assembly</id>
+		        <phase>package</phase>
+		        <goals>
+		          <goal>single</goal>
+		        </goals>
+		      </execution>
+		    </executions>
+		  </plugin>
+		
+		  <plugin>
+		    <groupId>com.theoryinpractise</groupId>
+		    <artifactId>clojure-maven-plugin</artifactId>
+		    <extensions>true</extensions>
+		    <configuration>
+		      <sourceDirectories>
+		        <sourceDirectory>src/clj</sourceDirectory>
+		      </sourceDirectories>
+		    </configuration>
+		    <executions>
+		      <execution>
+		        <id>compile</id>
+		        <phase>compile</phase>
+		        <goals>
+		          <goal>compile</goal>
+		        </goals>
+		      </execution>
+		    </executions>
+		  </plugin>
+		
+		  <plugin>
+		    <groupId>org.codehaus.mojo</groupId>
+		    <artifactId>exec-maven-plugin</artifactId>
+		    <version>1.2.1</version>
+		    <executions>
+		      <execution>
+		        <goals>
+		          <goal>exec</goal>
+		        </goals>
+		      </execution>
+		    </executions>
+		    <configuration>
+		      <executable>java</executable>
+		      <includeProjectDependencies>true</includeProjectDependencies>
+		      <includePluginDependencies>false</includePluginDependencies>
+		      <classpathScope>compile</classpathScope>
+		      <mainClass>${storm.topology}</mainClass>
+		    </configuration>
+		  </plugin>
+		</plugins>
+	</pluginManagement>
+	</build>
+
+  <modules>
+    <module>timedcount</module>
+  </modules>
+</project>
